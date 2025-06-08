@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="upload-main" class="flex flex-col">
+    <div id="upload-main-title" class="flex flex-col py-10 gap-3 items-center">
+        <h1 class="text-3xl font-bold text-blue-200">Upload Your Photo</h1>
+        <p class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-100 via-blue-200 to-blue-400">You can upload your photo and do face detection!</p>
+    </div>
+
+    <div id="upload-main-form" class="text-blue-200">
+
+        <form method="POST" enctype="multipart/form-data" action="{% url 'main:yolo_detect' %}">
+            {% csrf_token %}
+            <div class="flex flex-col gap-4">
+                <div id="upload-main-input" class="flex flex-col items-center">
+                    <input type="file" name="image" accept="image/*" required class="text-blue-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
+               file:text-sm file:font-semibold file:bg-blue-950 file:text-white
+               hover:file:bg-blue-900 cursor-pointer">
+
+                </div>
+                
+                <div id="upload-main-button" class="flex flex-col items-center">
+                    <button type="submit" class="px-3 py-2 border border-blue-950 hover:bg-blue-900 bg-blue-950 rounded-lg transform transition-transform duration-300 hover:scale-103">Upload and Detect</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if result_image %}
+    <div id="upload-main-result" class="grid grid-cols-2 py-10 gap-4">
+        <div class="flex flex-col gap-4 items-center">
+            <h1 class="text-2xl font-bold text-blue-200">Detection Result:</h1>
+            <img src="data:image/png;base64,{{ result_image }}" alt="YOLO result" width="640" height="480">
+        </div>
+
+        <div>
+            <h1 class="text-2xl font-bold text-blue-200">Summary:</h1>
+            <p class="text-2xl font-bold text-blue-200 py-4">Number of People: {{ count }}</p>
+            
+            <p class="text-2xl font-bold text-blue-200">Name of People:</p>
+            {% for name in names %}
+            <p class="text-2xl font-bold text-blue-200">- {{ name }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

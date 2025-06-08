@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+
+    <body class="bg-gray-900 flex flex-col min-h-screen">
+        <nav>
+            <div class="bg-gray-950 px-5 py-4 shadow-lg shadow-cyan-500/50">
+                <a href="/" class="text-3xl text-blue-200 font-bold">Robokenichi</a>
+            </div>
+        </nav>
+
+        <main class="flex-grow">
+            {% block content %}
+            {% endblock content %}
+        </main>
+
+        <footer>
+            <div id="content-main-createdby" class="flex flex-row gap-2 px-5 py-5 bg-gray-950">
+                <p class="text-md text-blue-200 font-bold">Created by: Juan Maxwell Tanaya | Wahyu Ridho Anggoro | Williams</p>
+            </div>
+        </footer>
+    </body>
+</html>
