@@ -84,7 +84,7 @@ def gen_frames():
             break
         else:
             # Encode frame as JPEG
-            ret, buffer = cv2.imencode('.jpg', frame)
+            _, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
             # Create a multipart response
             yield (b'--frame\r\n'
