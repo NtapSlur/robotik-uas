@@ -62,13 +62,13 @@ def update_crowd_data():
 
     if len(crowd_log) > 24:
         crowd_log.pop(0)
+    
+    print(crowd_log)
 
 def get_crowd_data(request):
     """
     Method untuk memperoleh data crowd untuk statistik dashboard, tapi bukan untuk face recognition
     """
-    update_crowd_data()
-    print(crowd_log)
     labels = [entry['time'] for entry in crowd_log]
     values = [entry['count'] for entry in crowd_log]
     return JsonResponse({'labels': labels, 'values': values})
