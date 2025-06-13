@@ -28,13 +28,31 @@
     </div>
 
     {% if result_image %}
-    <div id="upload-main-result" class="grid grid-cols-2 py-10 gap-4">
+    <div id="upload-main-result" class="grid grid-cols-2 px-5 py-10 gap-10">
         <div class="flex flex-col gap-4 items-center">
             <h1 class="text-2xl font-bold text-blue-200">Detection Result:</h1>
-            <img src="data:image/png;base64,{{ result_image }}" alt="YOLO result" width="640" height="480">
+            <div id="photo-content">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="flex flex-col items-center gap-4">
+                        <p class="text-xl font-bold text-blue-200">Face Detection</p>
+                        <img src="data:image/png;base64,{{ result_image }}" alt="YOLO result" width="640" height="480">
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4">
+                        <p class="text-xl font-bold text-blue-200">Crowd Person Count</p>
+                        <img src="data:image/png;base64,{{ crowd_image }}" alt="YOLO result" width="640" height="480">
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4">
+                        <p class="text-xl font-bold text-blue-200">Crowd DBSCAN</p>
+                        <img src="data:image/png;base64,{{ crowd_image_db }}" alt="YOLO result" width="640" height="480">
+                    </div>
+
+                </div>
+            </div>
         </div>
 
-        <div>
+        <div class="">
             <h1 class="text-2xl font-bold text-blue-200">Summary:</h1>
             <p class="text-2xl font-bold text-blue-200 py-4">Number of People: {{ count }}</p>
             
