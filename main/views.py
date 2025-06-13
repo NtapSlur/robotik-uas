@@ -71,7 +71,7 @@ def show_default(request):
     return render(request, "main.html")
 
 def show_stream(request):
-    return render(request, "stream.html")
+    return render(request, "stream.html", {'area': global_hasil_area})
 
 def show_upload(request):
     return render(request, "upload.html")
@@ -253,12 +253,19 @@ def gen_frames(db=False):
 
                 cv2.line(resized, (w_half, 0), (w_half, height), (255, 255, 0), 2)
                 cv2.line(resized, (0, h_half), (width, h_half), (255, 255, 0), 2)
+                grid_labels = ["Top-Left", "Top-Right", "Bottom-Left", "Bottom-Right"]
+                positions = [(10, 30), (w_half + 10, 30), (10, h_half + 30), (w_half + 10, h_half + 30)]
+
+                for i in range(4):
+                    text = f"{i} - {grid_labels[i]}"
+                    cv2.putText(resized, text, positions[i],
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
                         
                 if detections.shape[0] > global_person_count:
                     global_person_count = detections.shape[0]
                     global global_hasil_area
                     global_hasil_area = grid_counts
-                    
+
                 print(global_hasil_area)
 
             else:
