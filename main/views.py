@@ -224,29 +224,24 @@ def gen_frames(db=False):
                 height, width, _ = resized.shape
                 h_half, w_half = height // 2, width // 2
 
-                # Run detection once on full frame
                 results = model(rgb)
                 detections = results.xyxy[0]
                 detections = detections[detections[:, 4] >= 0.3]
                 names = model.names
 
-                # Count per grid: [top-left, top-right, bottom-left, bottom-right]
                 grid_counts = [0, 0, 0, 0]
 
                 for *box, conf, cls in detections.cpu().numpy():
                     xmin, ymin, xmax, ymax = map(int, box)
                     label = f"{names[int(cls)]} {conf:.2f}"
 
-                    # Draw box
                     cv2.rectangle(resized, (xmin, ymin), (xmax, ymax), (0, 0, 255), 2)
                     cv2.putText(resized, label, (xmin, ymin - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-                    # Compute center
                     cx = (xmin + xmax) // 2
                     cy = (ymin + ymax) // 2
 
-                    # Determine grid index
                     if cx < w_half and cy < h_half:
                         grid_counts[0] += 1  # top-left
                     elif cx >= w_half and cy < h_half:
@@ -256,7 +251,6 @@ def gen_frames(db=False):
                     else:
                         grid_counts[3] += 1  # bottom-right
 
-                # Draw grid lines
                 cv2.line(resized, (w_half, 0), (w_half, height), (255, 255, 0), 2)
                 cv2.line(resized, (0, h_half), (width, h_half), (255, 255, 0), 2)
                         
@@ -264,6 +258,7 @@ def gen_frames(db=False):
                     global_person_count = detections.shape[0]
                     global global_hasil_area
                     global_hasil_area = grid_counts
+                    
                 print(global_hasil_area)
 
             else:
