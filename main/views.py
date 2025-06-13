@@ -138,7 +138,7 @@ def yolo_detect(request):
             clustering = DBSCAN(eps=50, min_samples=3).fit(centers)
             labels = clustering.labels_
             n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
-            print(f"Jumlah kerumunan terdeteksi (cluster): {n_clusters}")
+            # print(f"Jumlah kerumunan terdeteksi (cluster): {n_clusters}")
 
         crowd_img = resized.copy()
         
@@ -196,7 +196,7 @@ def update_crowd_data():
     if len(crowd_log) > 24:
         crowd_log.pop(0)
     
-    print(crowd_log)
+    # print(crowd_log)
     global_person_count = 0
 
 def get_crowd_data(request):
@@ -257,7 +257,7 @@ def gen_frames(db=False):
                 positions = [(10, 30), (w_half + 10, 30), (10, h_half + 30), (w_half + 10, h_half + 30)]
 
                 for i in range(4):
-                    text = f"{i} - {grid_labels[i]}"
+                    text = f"{i} - {grid_labels[i]}: {grid_counts[i]}"
                     cv2.putText(resized, text, positions[i],
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
                         
@@ -266,7 +266,7 @@ def gen_frames(db=False):
                     global global_hasil_area
                     global_hasil_area = grid_counts
 
-                print(global_hasil_area)
+                # print(global_hasil_area)
 
             else:
                 # Whole frame detection + DBSCAN clustering
@@ -290,7 +290,7 @@ def gen_frames(db=False):
                     clustering = DBSCAN(eps=50, min_samples=3).fit(centers)
                     labels = clustering.labels_
                     n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
-                    print(f"Jumlah kerumunan terdeteksi (cluster): {n_clusters}")
+                    # print(f"Jumlah kerumunan terdeteksi (cluster): {n_clusters}")
                 else:
                     labels = []
                     n_clusters = 0
